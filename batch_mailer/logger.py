@@ -4,7 +4,7 @@ from datetime import datetime, date
 INFO = "INFO"
 WARN = "WARN"
 ERROR = "ERROR"
-LOG_FOLDER_PATH = "/logs"
+LOG_FOLDER_PATH = "logs"
 
 
 def info(text):
@@ -34,7 +34,7 @@ def write_log(text):
         absoluteLogFilePath = path.join(path.abspath(LOG_FOLDER_PATH), logFileName)
 
         with open(absoluteLogFilePath, "a") as logFile:
-            logFile.write(text + "\n")
+            logFile.write(text)
 
     except Exception as ex:
         print("logger.py  write_log(): Something went wrong...")

@@ -8,5 +8,9 @@ import os
 if __name__ != "__main__":
     exit()
 
-# Log the start of the program
-# Log if we found a config file or not
+logger.info("STARTING RUN")
+
+# Load the config file
+
+
+logger.info("RUN COMPLETE\n\n")

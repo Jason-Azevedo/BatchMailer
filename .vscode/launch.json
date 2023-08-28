@@ -8,7 +8,7 @@
             "name": "Debug",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/batch_mailer.py",
+            "program": "${workspaceFolder}/batch_mailer/batch_mailer.py",
             "console": "integratedTerminal",
         }
     ]
