@@ -11,7 +11,7 @@ ABS_TEST_CONFIG_PATH = path.abspath(app_config.CONFIG_PATH)
 
 
 class AppConfigTests(unittest.TestCase):
-    def setUpClass():
+    def tearDownClass():
         # Delete test config file if it exists
         if path.isfile(app_config.CONFIG_PATH):
             os.remove(ABS_TEST_CONFIG_PATH)
@@ -34,30 +34,25 @@ class AppConfigTests(unittest.TestCase):
         if not path.isfile(app_config.CONFIG_PATH):
             self.fail(f"No config file generated in path: {ABS_TEST_CONFIG_PATH}")
 
-        # Check if we get the expected error messages from the generated config file
-        generated_config = configparser.ConfigParser().read(ABS_TEST_CONFIG_PATH)
-        validation_messages = app_config.validate_config(generated_config)
-
-        self.assertEqual(
-            [],
-            validation_messages,
-            "Unexpected error messages occured from generated file validation",
-        )
-
     def test_load_config(self):
-        config = app_config.load_config()
+        # Generate config for this test
+        app_config.generate_config()
 
+        config = app_config.load_config()
         validation_messages = app_config.validate_config(config)
 
         self.assertEqual(
-            [],
+            [
+                app_config.EMPTY_FROM_EMAIL_MSG,
+                app_config.EMPTY_EMAIL_SUBJECT_MSG,
+                app_config.EMPTY_EMAIL_TEMPLATE_MSG,
+            ],
             validation_messages,
             f"Unexpected validations errors occured from loading test config",
         )
 
 
 # Load different configs to test validation
-# TODO: Implement these test configs
 def get_test_validation_config_data():
     # VALID CONFIG
     valid_config = configparser.ConfigParser()
@@ -87,7 +82,11 @@ def get_test_validation_config_data():
 
     empty_config_data = {
         "config": empty_config,
-        "expected_errors": [],
+        "expected_errors": [
+            app_config.EMPTY_FROM_EMAIL_MSG,
+            app_config.EMPTY_EMAIL_SUBJECT_MSG,
+            app_config.EMPTY_EMAIL_TEMPLATE_MSG,
+        ],
         "error_message": "Unexpected errors occured for config: Empty_Config",
     }
 

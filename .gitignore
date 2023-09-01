@@ -1,8 +1,12 @@
+# generated test files
+tests/logger_test_logs
+tests/test_config.ini
+
 # Generated content
 data
 logs
-tests/logger_test_logs
 
+# Configs and user content
 batch_mailer.ini
 email_attachments
 email_templates
