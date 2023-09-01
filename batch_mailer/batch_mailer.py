@@ -1,7 +1,6 @@
 import __main__
 import logger
-import config
-import mailer
+import app_config
 import os
 
 # Prevent execution of this file if it is not the main script

@@ -3,6 +3,10 @@ data
 logs
 tests/logger_test_logs
 
+batch_mailer.ini
+email_attachments
+email_templates
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
