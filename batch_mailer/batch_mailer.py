@@ -1,7 +1,7 @@
 import __main__
 import logger
 import app_config
-import os
+import mailer
 
 
 def validate_config(config):
@@ -28,8 +28,7 @@ config = app_config.load_config()
 config_valid = validate_config(config)
 
 if config_valid:
-    # Send mails
-    pass
+    mailer.send_mails(config)
 
 
 logger.info("RUN COMPLETE\n\n")

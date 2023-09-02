@@ -1,8 +1,8 @@
 from os import path
 from datetime import datetime, date
 
-INFO = "INFO"
-WARN = "WARN"
+INFO = "INFO "
+WARN = "WARN "
 ERROR = "ERROR"
 LOG_FOLDER_PATH = "logs"
 
