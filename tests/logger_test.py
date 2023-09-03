@@ -12,26 +12,27 @@ logger.LOG_FOLDER_PATH = TEST_LOG_FOLDER_PATH
 
 
 class LoggerTests(unittest.TestCase):
-    def setUp(self):
+    def setUpClass():
         if not path.isdir(TEST_LOG_FOLDER_PATH):
             os.mkdir(TEST_LOG_FOLDER_PATH)
 
-    def tearDown(self):
+    def tearDownClass():
         # clear all test logs
         if path.exists(TEST_LOG_FOLDER_PATH):
             shutil.rmtree(TEST_LOG_FOLDER_PATH)
 
+    # NOTE: For debugging: the 3 tests below are time sensitive tests
     def test_info(self):
         logger.info("This is an info log")
-        self.assert_log_type("INFO", "This is an info log")
+        self.assert_log_type(logger.INFO, "This is an info log")
 
     def test_warn(self):
         logger.warn("This is an warning log")
-        self.assert_log_type("WARN", "This is an warning log")
+        self.assert_log_type(logger.WARN, "This is an warning log")
 
     def test_error(self):
         logger.error("This is an error log")
-        self.assert_log_type("ERROR", "This is an error log")
+        self.assert_log_type(logger.ERROR, "This is an error log")
 
     def test_write_log(self):
         # Action

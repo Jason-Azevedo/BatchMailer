@@ -1,3 +1,7 @@
+import yagmail
+
+from os import path
+
 EMAIL_TEMPLATE_PATH = "email_templates"
 EMAIL_ATTACHMENTS_PATH = "email_attachments"
 
@@ -6,4 +10,6 @@ ACTIONED_EMAILS_PATH = "data/actioned_emails.txt"
 
 
 def send_mails(config):
+    # send the emails
+
     return
