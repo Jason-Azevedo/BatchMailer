@@ -5,6 +5,7 @@ from os import path
 
 TEST_TEMPLATE_FOLDER = path.abspath("tests/templates")
 TEST_ATTACHMENT_FOLDER = path.abspath("tests/attachments")
+TEST_ACTIONED_EMAILS_PATH = path.abspath("tests/data/actioned_emails.csv")
 
 
 TEST_APP_CONFIG = {
@@ -17,6 +18,10 @@ TEST_APP_CONFIG = {
 
 
 class MailerTest(unittest.TestCase):
+    def tearDownClass(self):
+        # Clear the actioned_emails file
+        pass
+
     def test_load_recipient_emails(self):
         pass
 
