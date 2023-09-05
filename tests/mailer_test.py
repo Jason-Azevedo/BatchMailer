@@ -18,6 +18,9 @@ TEST_APP_CONFIG = {
     },
 }
 
+mailer.ACTIONED_EMAILS_PATH = TEST_ACTIONED_EMAILS_PATH
+mailer.EMAIL_RECIPIENTS_PATH = TEST_RECIPIENT_EMAILS_PATH
+
 
 class MailerTest(unittest.TestCase):
     def tearDownClass(self):
@@ -26,9 +29,17 @@ class MailerTest(unittest.TestCase):
 
     def test_load_recipient_emails(self):
         # load data from test recipient file
+        test_recipients = []
+        with open(TEST_RECIPIENT_EMAILS_PATH, "r") as recipients_file:
+            csvreader = csv.reader(recipients_file)
+            next(csvreader)  # skip the header
 
-        # compare to mailer.load_recipients
-        pass
+            for emailrow in csvreader:
+                test_recipients.append(emailrow[0])
+
+        recipients = mailer.load_recipient_emails()
+
+        self.assertEqual(test_recipients, recipients)
 
     def test_get_absolute_attachment_paths(self):
         # Get the expected absolute email paths

@@ -3,13 +3,15 @@ tests/logger_test_logs
 tests/test_config.ini
 
 # Generated content
-data
-logs
+/data
+/logs
 
-# Configs and user content
+# User content
+/attachments
+/templates
+
+# Configs
 batch_mailer.ini
-email_attachments
-email_templates
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
