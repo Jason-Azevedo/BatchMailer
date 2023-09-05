@@ -1,4 +1,5 @@
 import unittest
+import csv
 
 from batch_mailer import mailer
 from os import path
@@ -6,6 +7,7 @@ from os import path
 TEST_TEMPLATE_FOLDER = path.abspath("tests/templates")
 TEST_ATTACHMENT_FOLDER = path.abspath("tests/attachments")
 TEST_ACTIONED_EMAILS_PATH = path.abspath("tests/data/actioned_emails.csv")
+TEST_RECIPIENT_EMAILS_PATH = path.abspath("tests/data/recipient_emails.csv")
 
 
 TEST_APP_CONFIG = {
@@ -19,10 +21,13 @@ TEST_APP_CONFIG = {
 
 class MailerTest(unittest.TestCase):
     def tearDownClass(self):
-        # Clear the actioned_emails file
-        pass
+        # clear actioned_emails.csv file:
+        open(TEST_ACTIONED_EMAILS_PATH, "w").close()
 
     def test_load_recipient_emails(self):
+        # load data from test recipient file
+
+        # compare to mailer.load_recipients
         pass
 
     def test_get_absolute_attachment_paths(self):
@@ -56,6 +61,27 @@ class MailerTest(unittest.TestCase):
         mailer.mark_emails_as_actioned(TEST_APP_CONFIG, actioned_emails)
 
         # load the csv and check if the 3 entries are correct
+        with open(TEST_ACTIONED_EMAILS_PATH) as csv_file:
+            csvreader = csv.reader(csv_file)
+
+            # read the lines and compare
+            not_found_emails = []
+            for email in actioned_emails:
+                email_found = False
+
+                for row in csvreader:
+                    if row[1] == email:
+                        email_found = True
+                        break
+
+                if not email_found:
+                    not_found_emails.append(email)
+
+            self.assertEqual(
+                [],
+                not_found_emails,
+                "These emails were not found in actioned_emails.csv",
+            )
 
     def test_clear_recipient_emails(self):
         pass
