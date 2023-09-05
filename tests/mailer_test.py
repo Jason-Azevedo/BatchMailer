@@ -95,4 +95,19 @@ class MailerTest(unittest.TestCase):
             )
 
     def test_clear_recipient_emails(self):
-        pass
+        # Load the original contents
+        original_file_contents = []
+        with open(TEST_RECIPIENT_EMAILS_PATH, "r") as recipients_file:
+            original_file_contents = recipients_file.readlines()
+
+        mailer.clear_recipient_emails()
+
+        # Assert if the file is empty
+        with open(TEST_RECIPIENT_EMAILS_PATH, "r") as recipients_file:
+            file_contents = recipients_file.readlines()
+
+            self.assertEqual([], file_contents)
+
+        # Restore the file, because it is used in git
+        with open(TEST_RECIPIENT_EMAILS_PATH, "w") as recipients_file:
+            recipients_file.writelines(original_file_contents)
