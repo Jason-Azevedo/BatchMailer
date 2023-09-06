@@ -3,6 +3,7 @@ import csv
 
 from batch_mailer import logger
 from os import path
+from datetime import datetime
 
 
 EMAIL_TEMPLATE_PATH = "email_templates"
@@ -87,8 +88,38 @@ def get_email_template(config):
 
 
 def mark_emails_as_actioned(config, emails):
-    # TODO: With the following columns: actioned_date, email, subject, template_name, attachments
-    pass
+    actioned_emails_path = path.abspath(ACTIONED_EMAILS_PATH)
+    file_exists = path.isfile(actioned_emails_path)
+
+    with open(actioned_emails_path, "a") as actioned_file:
+        csv_rows = []
+
+        config_subject = config["EMAIL"]["Subject"]
+        config_template = config["EMAIL"]["Template"]
+        config_attachments = config["EMAIL"]["Attachments"]
+
+        if not file_exists:
+            # Create header row with the following columns: actioned_date, email, subject, template_name, attachments
+            csv_rows.append(
+                ["actioned_date", "email", "subject", "template_name", "attachments"]
+            )
+
+        for email in emails:
+            # Create the date time format
+            actioned_date = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+
+            csv_rows.append(
+                [
+                    actioned_date,
+                    email,
+                    config_subject,
+                    config_template,
+                    config_attachments,
+                ]
+            )
+
+        csvwriter = csv.writer(actioned_file)
+        csvwriter.writerows(csv_rows)
 
 
 def clear_recipient_emails():

@@ -13,6 +13,7 @@ TEST_RECIPIENT_EMAILS_PATH = path.abspath("tests/data/recipient_emails.csv")
 TEST_APP_CONFIG = {
     "GENERAL": {"ClearEmailsAfterRun": "Y"},
     "EMAIL": {
+        "Subject": "This is a test email",
         "Template": "test_template.html",
         "Attachments": ["test.txt", "test2.txt"],
     },
@@ -25,7 +26,7 @@ mailer.EMAIL_TEMPLATE_PATH = TEST_TEMPLATE_FOLDER
 
 class MailerTest(unittest.TestCase):
     def tearDownClass(self):
-        # clear actioned_emails.csv file:
+        # TODO: Delete this file, as the method generates it.
         open(TEST_ACTIONED_EMAILS_PATH, "w").close()
 
     def test_load_recipient_emails(self):
