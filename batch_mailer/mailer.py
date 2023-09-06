@@ -1,4 +1,5 @@
 import yagmail
+import csv
 
 from batch_mailer import logger
 from os import path
@@ -46,7 +47,18 @@ def send_mails(config):
 
 
 def load_recipient_emails():
-    pass
+    recipient_emails = []
+
+    with open(EMAIL_RECIPIENTS_PATH, "r") as recipients_file:
+        csvreader = csv.reader(recipients_file)
+
+        # skip the header row
+        next(csvreader)
+
+        for email_row in csvreader:
+            recipient_emails.append(email_row[0])
+
+        return recipient_emails
 
 
 def get_absolute_attachment_paths(config):
