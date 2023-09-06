@@ -62,7 +62,17 @@ def load_recipient_emails():
 
 
 def get_absolute_attachment_paths(config):
-    pass
+    attachments = config["EMAIL"]["Attachments"]
+    absolute_attachments = []
+
+    for attachment in attachments:
+        absolute_path_to_attachment = path.join(
+            path.abspath(EMAIL_ATTACHMENTS_PATH), attachment
+        )
+
+        absolute_attachments.append(absolute_path_to_attachment)
+
+    return absolute_attachments
 
 
 def get_email_template(config):
