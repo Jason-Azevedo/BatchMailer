@@ -20,6 +20,7 @@ TEST_APP_CONFIG = {
 
 mailer.ACTIONED_EMAILS_PATH = TEST_ACTIONED_EMAILS_PATH
 mailer.EMAIL_RECIPIENTS_PATH = TEST_RECIPIENT_EMAILS_PATH
+mailer.EMAIL_TEMPLATE_PATH = TEST_TEMPLATE_FOLDER
 
 
 class MailerTest(unittest.TestCase):
@@ -106,7 +107,7 @@ class MailerTest(unittest.TestCase):
         with open(TEST_RECIPIENT_EMAILS_PATH, "r") as recipients_file:
             file_contents = recipients_file.readlines()
 
-            self.assertEqual([], file_contents)
+            self.assertEqual(["EMAILS"], file_contents)
 
         # Restore the file, because it is used in git
         with open(TEST_RECIPIENT_EMAILS_PATH, "w") as recipients_file:

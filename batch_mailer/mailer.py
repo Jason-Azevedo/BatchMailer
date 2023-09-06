@@ -76,7 +76,14 @@ def get_absolute_attachment_paths(config):
 
 
 def get_email_template(config):
-    pass
+    template_name = config["EMAIL"]["Template"]
+    template_path = path.join(path.abspath(EMAIL_TEMPLATE_PATH), template_name)
+
+    if not path.isfile(template_path):
+        raise FileExistsError(f"The following path is not a file: {template_path}")
+
+    with open(template_path, "r") as template_file:
+        return template_file.read()
 
 
 def mark_emails_as_actioned(config, emails):
@@ -85,4 +92,12 @@ def mark_emails_as_actioned(config, emails):
 
 
 def clear_recipient_emails():
-    pass
+    recipient_emails_path = path.abspath(EMAIL_RECIPIENTS_PATH)
+
+    if not path.isfile(recipient_emails_path):
+        raise FileExistsError(
+            f"The following file does not exist: {recipient_emails_path}"
+        )
+
+    with open(recipient_emails_path, "w") as recipients_file:
+        recipients_file.writelines("EMAILS")
