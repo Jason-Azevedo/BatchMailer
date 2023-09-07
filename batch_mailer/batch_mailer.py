@@ -1,4 +1,3 @@
-import __main__
 import logger
 import app_config
 import mailer
@@ -7,18 +6,13 @@ import mailer
 def validate_config(config):
     validation_messages = app_config.validate_config(config)
 
-    if validation_messages.count == 0:
+    if len(validation_messages) == 0:
         return True
 
     for message in validation_messages:
         logger.error(f"Config error: {message}")
 
     return False
-
-
-# Prevent execution of this file if it is not the main script
-if __name__ != "__main__":
-    exit()
 
 
 logger.info("STARTING RUN")

@@ -33,13 +33,13 @@ def generate_config():
 def validate_config(config):
     error_messages = []
 
-    if config["EMAIL"]["FromEmail"] == "":
+    if config["EMAIL"]["Email"] == "":
         error_messages.append(EMPTY_FROM_EMAIL_MSG)
 
-    if config["EMAIL"]["EmailSubject"] == "":
+    if config["EMAIL"]["Subject"] == "":
         error_messages.append(EMPTY_EMAIL_SUBJECT_MSG)
 
-    if config["EMAIL"]["EmailTemplate"] == "":
+    if config["EMAIL"]["Template"] == "":
         error_messages.append(EMPTY_EMAIL_TEMPLATE_MSG)
 
     return error_messages

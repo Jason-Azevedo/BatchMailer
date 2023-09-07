@@ -1,13 +1,13 @@
 import yagmail
 import csv
+import logger
 
-from batch_mailer import logger
 from os import path
 from datetime import datetime
 
 
-EMAIL_TEMPLATE_PATH = "email_templates"
-EMAIL_ATTACHMENTS_PATH = "email_attachments"
+EMAIL_TEMPLATE_PATH = "templates"
+EMAIL_ATTACHMENTS_PATH = "attachments"
 
 EMAIL_RECIPIENTS_PATH = "data/emails.csv"
 ACTIONED_EMAILS_PATH = "data/actioned_emails.csv"
@@ -19,19 +19,19 @@ def send_mails(config):
         generalConfig = config["GENERAL"]
 
         yag = yagmail.SMTP(
-            user=emailConfig["UserEmail"], password=emailConfig["UserPassword"]
+            user=emailConfig["Email"], password=emailConfig["EmailPassword"]
         )
 
         emails = load_recipient_emails()
-        attachments = get_absolute_attachment_paths()
-        template = get_email_template()
+        attachments = get_absolute_attachment_paths(config)
+        template = get_email_template(config)
 
         # send emails
         yag.send(
             to=emails,
-            subject=emailConfig["EmailSubject"],
+            subject=emailConfig["Subject"],
+            contents=template,
             attachments=attachments,
-            content=template,
         )
 
         # Log actioned emails
@@ -63,12 +63,12 @@ def load_recipient_emails():
 
 
 def get_absolute_attachment_paths(config):
-    attachments = config["EMAIL"]["Attachments"]
+    attachments = config["EMAIL"]["Attachments"].split(",")
     absolute_attachments = []
 
     for attachment in attachments:
         absolute_path_to_attachment = path.join(
-            path.abspath(EMAIL_ATTACHMENTS_PATH), attachment
+            path.abspath(EMAIL_ATTACHMENTS_PATH), attachment.strip()
         )
 
         absolute_attachments.append(absolute_path_to_attachment)
