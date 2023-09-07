@@ -35,7 +35,7 @@ def send_mails(config):
         )
 
         # Log actioned emails
-        mark_emails_as_actioned()
+        mark_emails_as_actioned(config, emails)
 
         if generalConfig["ClearEmailsAfterRun"] == "Y":
             clear_recipient_emails()
